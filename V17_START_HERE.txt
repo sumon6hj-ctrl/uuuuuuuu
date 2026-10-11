@@ -1,0 +1,43 @@
+ＧＡＭＥＲ-ＣＯＲＰ — V17 BUILD (ZIP QUICK START)
+================================================
+
+কী কী আছে
+- Operator dashboard : static/index.html   (লগইন + লাইভ লগ + বট রোস্টার + সেটিংস)
+- Public board       : static/public.html  (রিড-অনলি লেভেল বোর্ড)
+- Admin script       : static/js/app.js
+- Public script      : static/js/public.js
+- Styles             : static/css/ui-v17.css  (নতুন), ui-v14.css, theme.css
+- Server             : app/ (FastAPI + SQLite + lv.py worker)
+- Checks             : tests/
+
+ফিচার
+- UID+password অথবা Access Token দিয়ে অ্যাকাউন্ট যোগ, এডিট, বাল্ক অ্যাড/অ্যাকশন
+- প্রতিটা বটের আসল সেভড প্রোফাইল: Level, EXP, next-level progress
+- Live log: প্রতিটা ইভেন্ট (queue, UDP join, timeout, cooldown, profile change, level up)
+- Errors: ব্যর্থ রিকোয়েস্ট, সেশন শেষ, কানেকশন সমস্যা — সব দেখা যায় ও ডিসমিস করা যায়
+- লেভেল বাড়লে স্ক্রিনে বড় LEVEL UP কার্ড (আসল সেভড প্রোফাইল থেকে)
+- Level progress তালিকা, ফ্লিট সামারি, রিজিওন ডায়াগনস্টিক, মেটাডেটা এক্সপোর্ট/ইমপোর্ট
+- Public রিড-অনলি বোর্ড: সেভড প্রোফাইল কার্ড + অটো রিফ্রেশ
+
+চালু করার নিয়ম
+1) python3 -m venv venv && source venv/bin/activate      (Windows: venv\Scripts\activate)
+2) pip install -r requirements.txt
+3) cp .env.example .env      → নিজের শক্তিশালী ADMIN_PASSWORD (১২+ অক্ষর) বসান
+4) uvicorn app.main:app --host 0.0.0.0 --port 8000
+   অথবা: python3 run.py
+
+খোলার ঠিকানা
+- Public board : http://localhost:8000/
+- Operator     : http://localhost:8000/admin   (username: admin, password: .env এর মান)
+- API docs     : http://localhost:8000/docs
+
+দ্রুততার জন্য
+- ডিফল্টে "Fast mode" চালু থাকে: সব ব্যাকগ্রাউন্ড ও অ্যানিমেশন স্থির, কোনো পারালাক্স/টিল্ট চলে না।
+- দুর্বল ডিভাইসে অটো-ডিটেকশন নিজেই ফাস্ট মোডে রাখে। ইমারসিভ ইফেক্ট চাইলে উপরের টগল বা
+  Settings → Speed & effects থেকে চালু করুন।
+- ব্রাউজার/ডিভাইস "reduce motion" সেটিংকে সবসময় মানা হয়।
+
+নিরাপত্তা
+- এই ZIP-এ কোনো .env, SECRET_KEY, FERNET_KEY বা data/ ডেটাবেস নেই — প্রথম রানেই তৈরি হবে।
+- HTTPS ব্যবহার করুন এবং .env, SECRET_KEY, FERNET_KEY ও data/ ফোল্ডারের ব্যাকআপ রাখুন।
+- EXP/লেভেল শুধু সার্ভার প্রোফাইল থেকে আসে; UDP JOIN মানেই রিওয়ার্ড নয় — ড্যাশবোর্ড সেটাই দেখায়।
